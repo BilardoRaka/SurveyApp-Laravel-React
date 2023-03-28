@@ -17,13 +17,16 @@ class DashboardController extends Controller
         //total number of surveys
         $total = Survey::query()->where('user_id', $user->id)->count();
 
+        //latest result survey
         $latest = Survey::query()->where('user_id', $user->id)->latest('created_at')->first();
-
+        
+        //total number of answers survey
         $totalAnswers = SurveyAnswer::query()
             ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
             ->where('surveys.user_id', $user->id)
             ->count();
-
+        
+        //5 latest survey answer
         $latestAnswers = SurveyAnswer::query()
             ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
             ->where('surveys.user_id', $user->id)
